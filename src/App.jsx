@@ -54,66 +54,211 @@ function Footer() {
   )
 }
 
+
+
+
+
 function Home() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
-    <section>
-      <h2 className="text-4xl font-bold mb-4">Bem-vindo à MuscleMax</h2>
-      <p className="mb-6 max-w-xl text-lg leading-relaxed">
-        Seu espaço para treinos personalizados e acompanhamento profissional com tecnologia de ponta.
-      </p>
-      <button
-        onClick={() => navigate('/contact')}
-        className="bg-yellow-400 hover:bg-yellow-500 text-primary font-bold px-6 py-3 rounded-md transition shadow-md"
-      >
-        Comece Agora
-      </button>
+    <section className="py-16 px-4 bg-white" id="home">
+      <div className="max-w-7xl mx-auto">
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-6xl font-bold text-primary mb-6">
+            Bem-vindo à MuscleMax
+          </h1>
+          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+            A revolução no mundo fitness! Treinos personalizados, acompanhamento de resultados e exercícios em <strong>Realidade Aumentada</strong> para transformar seu corpo e sua vida.
+          </p>
+          <button
+            onClick={() => navigate('/contact')}
+            className="mt-8 bg-yellow-400 hover:bg-yellow-500 text-primary font-bold px-8 py-4 rounded-md transition shadow-md"
+          >
+            Comece Agora
+          </button>
+        </div>
+
+        {/* Benefícios */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="bg-gray-50 p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 className="text-2xl font-semibold text-secondary mb-3">Tecnologia em AR</h3>
+            <p className="text-gray-700">
+              Acesse uma galeria completa de exercícios com <strong>modelos 3D</strong> e <strong>Realidade Aumentada</strong>. Veja a execução perfeita dos movimentos no seu ambiente!
+            </p>
+          </div>
+          <div className="bg-gray-50 p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 className="text-2xl font-semibold text-secondary mb-3">Treinos Personalizados</h3>
+            <p className="text-gray-700">
+              Algoritmos inteligentes criam planos de treino baseados nos seus objetivos: <strong>hipertrofia, emagrecimento ou performance</strong>.
+            </p>
+          </div>
+          <div className="bg-gray-50 p-6 rounded-xl shadow hover:scale-105 transition">
+            <h3 className="text-2xl font-semibold text-secondary mb-3">Acompanhamento em Tempo Real</h3>
+            <p className="text-gray-700">
+              Monitore sua evolução com gráficos, relatórios e suporte de especialistas. Sua evolução é medida, analisada e otimizada.
+            </p>
+          </div>
+        </div>
+
+        {/* Seção de Exercícios em AR */}
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold text-primary mb-6 text-center">
+            Visualize seus Exercícios em Realidade Aumentada
+          </h2>
+          <p className="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-8">
+            Explore nossa biblioteca interativa com centenas de exercícios. Use filtros para encontrar exercícios por grupo muscular e visualize execuções perfeitas em vídeo ou <strong>modelos 3D</strong> em <strong>Realidade Aumentada</strong> diretamente no seu ambiente.
+          </p>
+
+          {/* Filtros simulados */}
+          <div className="flex flex-wrap gap-4 justify-center mb-8">
+            {['Peito', 'Costas', 'Perna', 'Bíceps', 'Tríceps', 'Ombro', 'Abdômen'].map((grupo) => (
+              <button
+                key={grupo}
+                className="bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow"
+              >
+                {grupo}
+              </button>
+            ))}
+          </div>
+
+          {/* Lista de Exercícios simulada */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { nome: 'Supino Reto', tipo: 'Peito' },
+              { nome: 'Puxada Alta', tipo: 'Costas' },
+              { nome: 'Agachamento Livre', tipo: 'Perna' },
+              { nome: 'Rosca Direta', tipo: 'Bíceps' },
+              { nome: 'Tríceps Corda', tipo: 'Tríceps' },
+              { nome: 'Desenvolvimento Halteres', tipo: 'Ombro' },
+            ].map((exercicio) => (
+              <div
+                key={exercicio.nome}
+                className="bg-gray-50 p-4 rounded-xl shadow hover:scale-105 transition"
+              >
+                <h4 className="text-xl font-semibold mb-2">{exercicio.nome}</h4>
+                <div className="bg-black rounded-lg h-48 flex items-center justify-center mb-3">
+                  <span className="text-white">[Modelo 3D ou Vídeo]</span>
+                </div>
+                <button className="w-full bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow">
+                  Visualizar em AR
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Final */}
+        <div className="text-center mt-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            Pronto para sua transformação?
+          </h2>
+          <p className="text-lg text-gray-700 mb-6">
+            A MuscleMax está aqui para te levar além dos seus limites. Experimente tecnologia, treino e performance como você nunca viu.
+          </p>
+          <button
+            onClick={() => navigate('/contact')}
+            className="bg-yellow-400 hover:bg-yellow-500 text-primary font-bold px-8 py-4 rounded-md transition shadow-md"
+          >
+            Comece Agora
+          </button>
+        </div>
+      </div>
     </section>
-  )
+  );
 }
+
+
+
+
+
+
+
 
 function About() {
   return (
-    <section>
-      <h2 className="text-3xl font-semibold mb-4">Sobre Nós</h2>
-      <p className="max-w-xl text-base leading-relaxed">
-        A MuscleMax combina ciência, tecnologia e dedicação para transformar sua rotina de exercícios.
-      </p>
+    <section className="py-16 px-4 bg-white" id="sobre">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        
+        {/* Texto */}
+        <div>
+          <h2 className="text-4xl font-bold text-primary mb-6">Sobre a MuscleMax</h2>
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            A <span className="text-secondary font-semibold">MuscleMax</span> nasceu da paixão por transformar vidas através da combinação de <strong>tecnologia, ciência e performance.</strong>
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed mb-4">
+            Somos mais do que uma academia. Somos uma comunidade que une profissionais qualificados, treinos de alta performance, inteligência artificial e realidade aumentada para você atingir seu máximo potencial.
+          </p>
+          <p className="text-gray-700 text-lg leading-relaxed">
+            Aqui, sua evolução é levada a sério. Seja para <strong>hipertrofia, emagrecimento ou qualidade de vida</strong>, nossa missão é te conduzir ao próximo nível.
+          </p>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+
+function Contact() {
+  return (
+    <section className="py-10 px-4 bg-gray-50" id="contato">
+      <h2 className="text-4xl font-bold text-center mb-8 text-primary">Fale Conosco</h2>
+
+      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+        
+        {/* Informações de Contato */}
+        <div className="space-y-6">
+          <p className="text-gray-600">
+            Estamos prontos para te ajudar na sua transformação física. Entre em contato com nossa equipe para tirar dúvidas, sugestões ou parcerias.
+          </p>
+          <div className="space-y-2 text-gray-700">
+            <p><strong>📍 Endereço:</strong> Rua da Hipertrofia, 123 - Centro, São Paulo - SP</p>
+            <p><strong>📞 Telefone:</strong> (11) 98765-4321</p>
+            <p><strong>📧 E-mail:</strong> contato@musclemax.com</p>
+          </div>
+
+        
+        </div>
+
+        {/* Formulário */}
+        <form 
+          className="space-y-4 bg-white p-6 rounded-xl shadow-md"
+          onSubmit={e => { e.preventDefault(); alert('Mensagem enviada com sucesso!') }}
+        >
+          <h4 className="text-xl font-semibold mb-2">Envie sua mensagem</h4>
+          <input
+            type="text"
+            placeholder="Seu nome"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Seu e-mail"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+            required
+          />
+          <textarea
+            placeholder="Sua mensagem"
+            rows={5}
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-primary text-yellow-400 px-4 py-3 rounded-md hover:bg-secondary transition shadow-md"
+          >
+            Enviar
+          </button>
+        </form>
+      </div>
     </section>
   )
 }
 
-function Contact() {
-  return (
-    <section>
-      <h2 className="text-3xl font-semibold mb-4">Fale Conosco</h2>
-      <form className="max-w-md space-y-4" onSubmit={e => { e.preventDefault(); alert('Mensagem enviada!') }}>
-        <input
-          type="text"
-          placeholder="Seu nome"
-          className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Seu email"
-          className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-          required
-        />
-        <textarea
-          placeholder="Sua mensagem"
-          rows={4}
-          className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-primary"
-          required
-        />
-        <button type="submit" className="bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow-md">
-          Enviar
-        </button>
-      </form>
-    </section>
-  )
-}
 
 // =====================
 // Testemunhos CRUD com localStorage

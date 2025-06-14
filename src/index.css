@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import "tailwind/preflight";
+
 @tailwind utilities;
 
 /* Estilos globais */
