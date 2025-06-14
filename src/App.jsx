@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
+import '@google/model-viewer';
+
 
 export default function App() {
   return (
@@ -58,8 +60,56 @@ function Footer() {
 
 
 
+
 function Home() {
   const navigate = useNavigate();
+
+  const exercicios = [
+    {
+      nome: 'Supino Reto',
+      tipo: 'Peito',
+      modelo: '/models/supino-reto.glb',
+      descricao: 'Exercício para fortalecer o peitoral.',
+    },
+    {
+      nome: 'Puxada Alta',
+      tipo: 'Costas',
+      modelo: '/models/puxada-alta.glb',
+      descricao: 'Trabalha a musculatura das costas.',
+    },
+    {
+      nome: 'Agachamento Livre',
+      tipo: 'Perna',
+      modelo: '/models/agachamento-livre.glb',
+      descricao: 'Fortalece quadríceps, glúteos e posterior de coxa.',
+    },
+    {
+      nome: 'Rosca Direta',
+      tipo: 'Bíceps',
+      modelo: '/models/rosca-direta.glb',
+      descricao: 'Foco nos bíceps braquiais.',
+    },
+    {
+      nome: 'Tríceps Corda',
+      tipo: 'Tríceps',
+      modelo: '/models/triceps-corda.glb',
+      descricao: 'Isola os tríceps com eficácia.',
+    },
+    {
+      nome: 'Desenvolvimento Halteres',
+      tipo: 'Ombro',
+      modelo: '/models/desenvolvimento-halteres.glb',
+      descricao: 'Fortalece os ombros.',
+    },
+  ];
+
+  // Função para abrir a visualização AR em nova aba (usando model-viewer)
+  function abrirAR(modelo) {
+    // Abre o modelo no modo AR — na prática, o model-viewer cuida disso.
+    // Como não podemos usar <model-viewer> em nova aba, criamos uma página simples ou modal para isso.
+    // Aqui vamos abrir o arquivo direto (o modelo pode ser aberto no celular via Quick Look / Scene Viewer).
+    window.open(modelo, '_blank');
+  }
 
   return (
     <section className="py-16 px-4 bg-white" id="home">
@@ -103,46 +153,39 @@ function Home() {
           </div>
         </div>
 
-        {/* Seção de Exercícios em AR */}
+        {/* Exercícios em AR */}
         <div className="mb-16">
           <h2 className="text-4xl font-bold text-primary mb-6 text-center">
             Visualize seus Exercícios em Realidade Aumentada
           </h2>
           <p className="text-center text-lg text-gray-700 max-w-3xl mx-auto mb-8">
-            Explore nossa biblioteca interativa com centenas de exercícios. Use filtros para encontrar exercícios por grupo muscular e visualize execuções perfeitas em vídeo ou <strong>modelos 3D</strong> em <strong>Realidade Aumentada</strong> diretamente no seu ambiente.
+            Explore nossa biblioteca interativa com exercícios detalhados. Clique em "Visualizar em AR" para ver o modelo 3D do exercício no seu ambiente.
           </p>
 
-          {/* Filtros simulados */}
-          <div className="flex flex-wrap gap-4 justify-center mb-8">
-            {['Peito', 'Costas', 'Perna', 'Bíceps', 'Tríceps', 'Ombro', 'Abdômen'].map((grupo) => (
-              <button
-                key={grupo}
-                className="bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow"
-              >
-                {grupo}
-              </button>
-            ))}
-          </div>
-
-          {/* Lista de Exercícios simulada */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { nome: 'Supino Reto', tipo: 'Peito' },
-              { nome: 'Puxada Alta', tipo: 'Costas' },
-              { nome: 'Agachamento Livre', tipo: 'Perna' },
-              { nome: 'Rosca Direta', tipo: 'Bíceps' },
-              { nome: 'Tríceps Corda', tipo: 'Tríceps' },
-              { nome: 'Desenvolvimento Halteres', tipo: 'Ombro' },
-            ].map((exercicio) => (
+            {exercicios.map((exercicio) => (
               <div
                 key={exercicio.nome}
-                className="bg-gray-50 p-4 rounded-xl shadow hover:scale-105 transition"
+                className="bg-gray-50 p-4 rounded-xl shadow hover:scale-105 transition flex flex-col"
               >
                 <h4 className="text-xl font-semibold mb-2">{exercicio.nome}</h4>
-                <div className="bg-black rounded-lg h-48 flex items-center justify-center mb-3">
-                  <span className="text-white">[Modelo 3D ou Vídeo]</span>
-                </div>
-                <button className="w-full bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow">
+                <p className="text-gray-700 mb-3 flex-grow">{exercicio.descricao}</p>
+                
+                {/* Modelo 3D embutido com model-viewer */}
+                <model-viewer
+                  src={exercicio.modelo}
+                  alt={`Modelo 3D do exercício ${exercicio.nome}`}
+                  ar
+                  ar-modes="webxr scene-viewer quick-look"
+                  camera-controls
+                  autoplay
+                  style={{ width: '100%', height: '300px' }}
+                ></model-viewer>
+
+                <button
+                  onClick={() => abrirAR(exercicio.modelo)}
+                  className="mt-3 w-full bg-primary text-yellow-400 px-4 py-2 rounded-md hover:bg-secondary transition shadow"
+                >
                   Visualizar em AR
                 </button>
               </div>
@@ -169,6 +212,8 @@ function Home() {
     </section>
   );
 }
+
+
 
 
 
