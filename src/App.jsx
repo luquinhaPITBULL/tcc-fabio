@@ -84,7 +84,7 @@ function Home() {
       descricao: 'Fortalece quadríceps, glúteos e posterior de coxa.',
     },
     {
-      nome: 'Rosca Direta',
+      nome: 'Rosca W',
       tipo: 'Bíceps',
       modelo: '/models/rosca-direta.glb',
       descricao: 'Foco nos bíceps braquiais.',
