@@ -38,7 +38,7 @@ function Header() {
           Contato
         </Link>
         <Link to="/testimonials" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Testemunhos
+          Feedback
         </Link>
         <Link to="/banners" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
           Banners
@@ -308,6 +308,7 @@ function Contact() {
 // =====================
 // Testemunhos CRUD com localStorage
 // =====================
+
 function Testimonials() {
   const [testimonials, setTestimonials] = useState(() => {
     // Carregar do localStorage ou iniciar vazio

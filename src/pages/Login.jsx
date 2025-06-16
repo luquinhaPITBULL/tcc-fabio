@@ -1,15 +1,12 @@
-import Header from "../components/Header";
-import FormularioLogin from "../components/FormularioLogin";
-import Footer from "../components/Footer";
+import FormularioLogin from '../components/FormularioLogin'
 
-export default function Login() {
+function Login() {
   return (
-    <>
-      <Header />
-      <main className="min-h-[80vh] bg-gray-50 py-10">
-        <FormularioLogin />
-      </main>
-      <Footer />
-    </>
-  );
+    <div className="p-8">
+      <h2 className="text-3xl font-bold mb-4">Acesse sua conta</h2>
+      <FormularioLogin />
+    </div>
+  )
 }
+
+export default Login

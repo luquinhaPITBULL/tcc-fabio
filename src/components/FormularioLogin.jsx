@@ -1,23 +1,56 @@
-export default function FormularioLogin() {
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+function FormularioLogin() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    const res = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+
+    const data = await res.json()
+
+    if (res.ok) {
+      localStorage.setItem('token', data.token)
+      alert('✅ Login bem-sucedido!')
+      navigate('/dashboard')
+    } else {
+      alert(`❌ Erro: ${data.error}`)
+    }
+  }
+
   return (
-    <form className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-lg mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-blue-900 text-center">Entrar</h2>
+    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto">
       <input
-        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
         placeholder="Email"
-        className="w-full mb-5 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+        type="email"
+        className="w-full border p-2 rounded"
+        required
       />
       <input
-        type="password"
+        value={password}
+        onChange={e => setPassword(e.target.value)}
         placeholder="Senha"
-        className="w-full mb-6 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"
+        type="password"
+        className="w-full border p-2 rounded"
+        required
       />
       <button
         type="submit"
-        className="w-full bg-yellow-400 text-blue-900 font-bold py-3 rounded-md hover:bg-yellow-300 transition"
+        className="bg-yellow-400 px-4 py-2 rounded hover:bg-yellow-500"
       >
-        Entrar
+        Login
       </button>
     </form>
-  );
+  )
 }
+
+export default FormularioLogin

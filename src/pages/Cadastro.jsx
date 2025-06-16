@@ -1,15 +1,12 @@
-import Header from "../components/Header";
-import FormularioCadastro from "../components/FormularioCadastro";
-import Footer from "../components/Footer";
+import FormularioCadastro from '../components/FormularioCadastro'
 
-export default function Cadastro() {
+function Cadastro() {
   return (
-    <>
-      <Header />
-      <main className="min-h-[80vh] bg-gray-50 py-10">
-        <FormularioCadastro />
-      </main>
-      <Footer />
-    </>
-  );
+    <div className="p-8">
+      <h2 className="text-3xl font-bold mb-4">Crie sua conta</h2>
+      <FormularioCadastro />
+    </div>
+  )
 }
+
+export default Cadastro
