@@ -4,41 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@google/model-viewer": "^4.1.0",
-    "@tailwindcss/vite": "^4.1.10",
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.5.0",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.15.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.6.2"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@tailwindcss/postcss": "^4.1.10",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react-swc": "^3.8.0",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.22.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "postcss": "^8.5.5",
-    "tailwindcss": "^4.1.10",
-    "vite": "^6.3.1"
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev": "npm run dev:backend & npm run dev:frontend",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
   "description": "Plataforma interativa com IA e AR para treinos personalizados.",
-  "main": "eslint.config.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eudalarmee/tcc-fabio.git"
