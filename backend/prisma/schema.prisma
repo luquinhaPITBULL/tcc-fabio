@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  name             String
+  email            String        @unique
+  password         String
+  role             Role          @default(USER)
+  workouts         WorkoutPlan[]
+  createdExercises Exercise[]    @relation("ExerciseCreator")
+  createdAt        DateTime      @default(now())
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Exercise {
+  id           Int                 @id @default(autoincrement())
+  name         String
+  muscleGroup  String
+  equipment    String?
+  description  String?
+  imageUrl     String?
+  createdBy    Int?
+  admin        User?               @relation("ExerciseCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  workoutLinks WorkoutExercise[]
+  createdAt    DateTime            @default(now())
+}
+
+model WorkoutPlan {
+  id          Int                @id @default(autoincrement())
+  name        String
+  userId      Int
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercises   WorkoutExercise[]
+  createdAt   DateTime           @default(now())
+}
+
+model WorkoutExercise {
+  id            Int         @id @default(autoincrement())
+  workoutPlanId Int
+  exerciseId    Int
+  sets          Int?
+  reps          Int?
+  weight        Float?
+  notes         String?
+  exercise      Exercise    @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  workoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+
+  @@unique([workoutPlanId, exerciseId])
+}
+
