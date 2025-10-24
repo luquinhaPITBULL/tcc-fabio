@@ -1,49 +1,141 @@
-import express from 'express'
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import User from './models/User.js'
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import cors from "cors";
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
-app.use(express.json())
-app.use(cors())
+const app = express();
+const prisma = new PrismaClient();
 
-mongoose.connect(process.env.MONGO_URI)
+app.use(express.json());
+app.use(cors());
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
+const PORT = process.env.PORT || 5000;
 
-app.post('/register', async (req, res) => {
-  const { name, email, password } = req.body
+// Middleware de autenticação
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
 
-  const userExists = await User.findOne({ email })
-  if (userExists) return res.status(400).json({ error: 'Usuário já cadastrado' })
+  if (!token) return res.status(401).json({ error: "Token não fornecido" });
 
-  const hashed = await bcrypt.hash(password, 10)
-  const user = await User.create({ name, email, password: hashed })
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Token inválido" });
+    req.user = user;
+    next();
+  });
+};
 
-  res.json({ message: 'Usuário criado com sucesso', user: { name, email } })
-})
+// Rota de registro
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body
+    // Validação básica
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ error: "Todos os campos são obrigatórios" });
+    }
 
-  const user = await User.findOne({ email })
-  if (!user) return res.status(400).json({ error: 'Usuário não encontrado' })
+    // Verifica se o usuário já existe
+    const userExists = await prisma.user.findUnique({ where: { email } });
+    if (userExists) {
+      return res.status(400).json({ error: "Usuário já cadastrado" });
+    }
 
-  const isMatch = await bcrypt.compare(password, user.password)
-  if (!isMatch) return res.status(400).json({ error: 'Senha incorreta' })
+    // Hash da senha
+    const hashed = await bcrypt.hash(password, 10);
 
-  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1d' })
+    // Cria o usuário
+    const user = await prisma.user.create({
+      data: { name, email, password: hashed }
+    });
 
-  res.json({ token, user: { name: user.name, email: user.email } })
-})
+    res.status(201).json({
+      message: "Usuário criado com sucesso",
+      user: { id: user.id, name: user.name, email: user.email }
+    });
+  } catch (error) {
+    console.error("Erro no registro:", error);
+    res.status(500).json({ error: "Erro ao criar usuário" });
+  }
+});
 
-app.get('/', (req, res) => {
-  res.send('API MuscleMax Rodando ✔️')
-})
+// Rota de login
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-app.listen(5000, () => console.log('Servidor rodando na porta 5000 🚀'))
+    // Validação básica
+    if (!email || !password) {
+      return res.status(400).json({ error: "Email e senha são obrigatórios" });
+    }
+
+    // Busca o usuário
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      return res.status(400).json({ error: "Usuário não encontrado" });
+    }
+
+    // Verifica a senha
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ error: "Senha incorreta" });
+    }
+
+    // Gera o token
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, {
+      expiresIn: "1d"
+    });
+
+    res.json({
+      token,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role }
+    });
+  } catch (error) {
+    console.error("Erro no login:", error);
+    res.status(500).json({ error: "Erro ao fazer login" });
+  }
+});
+
+// Rota protegida - Perfil do usuário
+app.get("/profile", authenticateToken, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { id: true, name: true, email: true, role: true, createdAt: true }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Erro ao buscar perfil:", error);
+    res.status(500).json({ error: "Erro ao buscar perfil" });
+  }
+});
+
+// Rota raiz
+app.get("/", (req, res) => {
+  res.send("API MuscleMax Rodando ✔️");
+});
+
+// Inicialização do servidor
+app.listen(PORT, () => {
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+  console.log(`📊 Banco de dados conectado via Prisma`);
+});
+
+// Tratamento de encerramento gracioso
+process.on("SIGINT", async () => {
+  await prisma.$disconnect();
+  console.log("� Prisma desconectado");
+  process.exit(0);
+});
