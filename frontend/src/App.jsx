@@ -1,59 +1,53 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
-import '@google/model-viewer';
+/**
+ * MUSCLEMAX - App Principal
+ * 
+ * ETAPA 2 IMPLEMENTADA:
+ * ✅ Sistema de autenticação (AuthProvider)
+ * ✅ Navegação com scroll suave
+ * ✅ Assistente de IA flutuante (AIChat)
+ * 
+ * Estrutura:
+ * - AuthProvider: Contexto de login/logout + localStorage
+ * - Router: Navegação entre páginas
+ * - AIChat: Bot de IA disponível em todas as páginas
+ */
 
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import AIChat from './components/AIChat';
+import '@google/model-viewer';
+import Landing from './pages/Landing';
+import Resultados from './pages/Resultados';
+import Equipe from './pages/Equipe';
+import Acessar from './pages/Acessar';
+import PlanilhaDetalhes from './pages/PlanilhaDetalhes';
+import ModalidadeDetalhes from './pages/ModalidadeDetalhes';
 
 export default function App() {
   return (
-    <Router>
-      <Header />
-
-      <main className="p-6 max-w-6xl mx-auto min-h-[70vh] flex flex-col items-center">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/testimonials" element={<Testimonials />} />
-          <Route path="/banners" element={<Banners />} />
-        </Routes>
-      </main>
-
-      <Footer />
-    </Router>
-  )
-}
-
-function Header() {
-  return (
-    <header className="bg-primary p-4 flex justify-between items-center">
-      <h1 className="text-2xl font-bold text-white">MuscleMax</h1>
-      <nav className="space-x-6">
-        <Link to="/" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Home
-        </Link>
-        <Link to="/about" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Sobre
-        </Link>
-        <Link to="/contact" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Contato
-        </Link>
-        <Link to="/testimonials" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Feedback
-        </Link>
-        <Link to="/banners" className="text-yellow-400 font-semibold hover:text-yellow-400 transition">
-          Banners
-        </Link>
-      </nav>
-    </header>
-  )
-}
-
-function Footer() {
-  return (
-    <footer className="bg-dark text-light p-4 text-center">
-      &copy; 2025 MuscleMax - Todos os direitos reservados
-    </footer>
-  )
+    <AuthProvider>
+      <Router>
+        <main className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/planilha/:id" element={<PlanilhaDetalhes />} />
+            <Route path="/modalidade/:id" element={<ModalidadeDetalhes />} />
+            <Route path="/resultados" element={<Resultados />} />
+            <Route path="/equipe" element={<Equipe />} />
+            <Route path="/acessar" element={<Acessar />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/banners" element={<Banners />} />
+          </Routes>
+        </main>
+        
+        {/* Assistente de IA flutuante - disponível em todas as páginas */}
+        <AIChat />
+      </Router>
+    </AuthProvider>
+  );
 }
 
 

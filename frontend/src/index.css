@@ -1,74 +1,283 @@
 @import "tailwindcss";
 
-
 @tailwind utilities;
 
-/* Estilos globais */
-body {
-  @apply bg-gray-100 text-gray-900 font-sans;
+/* ====================================
+   VARIÁVEIS CSS - PALETA MUSCLEMAX
+   ==================================== */
+:root {
+  /* Cores de fundo - Dark Premium */
+  --bg-primary: #0D1117;
+  --bg-secondary: #151B23;
+  --bg-tertiary: #1C2330;
+  
+  /* Cores de texto */
+  --text-primary: #FFFFFF;
+  --text-secondary: #C7D0DD;
+  --text-tertiary: #8A95A6;
+  
+  /* Acentos - Gradiente quente MUSCLEMAX */
+  --accent-orange: #FF6A3D;
+  --accent-orange-hover: #FF7A00;
+  --accent-magenta: #FF1493;
+  
+  /* Sombras e elevations */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-glow-orange: 0 0 20px rgba(255, 106, 61, 0.4);
+  
+  /* Transições */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Cabeçalhos */
+/* ====================================
+   ESTILOS GLOBAIS
+   ==================================== */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0D1117;
+  color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Tipografia - Hierarquia esportiva com impacto */
 h1, h2, h3, h4, h5, h6 {
-  @apply font-bold text-gray-800;
+  font-weight: 700;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.02em; /* Tracking levemente negativo para impacto */
 }
 
 h1 {
-  @apply text-4xl md:text-5xl;
+  font-size: 2.25rem;
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3.75rem;
+  }
 }
 
 h2 {
-  @apply text-3xl md:text-4xl;
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  h2 {
+    font-size: 3rem;
+  }
 }
 
 h3 {
-  @apply text-2xl md:text-3xl;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
-/* Botões padrão */
+@media (min-width: 768px) {
+  h3 {
+    font-size: 1.875rem;
+  }
+}
+
+p {
+  color: #C7D0DD;
+  line-height: 1.7;
+}
+
+/* ====================================
+   BOTÕES - Sistema de design MUSCLEMAX
+   ==================================== */
 .btn {
-  @apply px-4 py-2 rounded-xl text-white font-semibold transition-all duration-300 ease-in-out;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.btn:focus {
+  outline: none;
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 2px #0D1117, 0 0 0 4px rgb(249 115 22);
+}
+
+/* Botão primário com gradiente quente */
 .btn-primary {
-  @apply bg-blue-600 hover:bg-blue-700;
+  background: linear-gradient(135deg, #FF6A3D 0%, #FF1493 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(255, 106, 61, 0.39);
 }
 
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(255, 106, 61, 0.5);
+  transform: scale(1.02);
+}
+
+/* Botão secundário com borda */
 .btn-secondary {
-  @apply bg-gray-600 hover:bg-gray-700;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background-color: transparent;
+  color: white;
 }
 
-/* Inputs */
+.btn-secondary:hover {
+  border-color: white;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Botão terciário (ghost) */
+.btn-tertiary {
+  background-color: #1C2330;
+  color: white;
+  border: 1px solid #2D3748;
+}
+
+.btn-tertiary:hover {
+  background-color: #2D3748;
+  border-color: #3D4758;
+}
+
+/* ====================================
+   INPUTS
+   ==================================== */
 .input {
-  @apply px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #1C2330;
+  border: 1px solid #2D3748;
+  color: white;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Containers */
-.container {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+.input::placeholder {
+  color: #8A95A6;
 }
 
-/* Cards */
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #FF6A3D;
+  border-color: transparent;
+}
+
+/* ====================================
+   CARDS
+   ==================================== */
 .card {
-  @apply bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition;
+  background-color: #151B23;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn {
-  @apply px-4 py-2 rounded-xl font-semibold transition duration-300 ease-in-out;
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  transform: translateY(-0.25rem);
 }
 
-.btn-primary {
-  @apply bg-yellow-400 text-gray-900 hover:bg-yellow-500;
+.card-interactive {
+  background-color: #151B23;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  padding: 1.5rem;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-.btn-secondary {
-  @apply bg-gray-600 text-white hover:bg-gray-700;
+.card-interactive:hover {
+  box-shadow: 0 10px 25px rgba(255, 106, 61, 0.2);
+  transform: translateY(-0.25rem);
 }
 
-.input {
-  @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400;
+/* ====================================
+   OVERLAYS para imagens
+   ==================================== */
+.overlay-dark {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-.card {
-  @apply bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition;
+.overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4), transparent);
+}
+
+/* ====================================
+   ANIMAÇÕES E MICRO-INTERAÇÕES
+   ==================================== */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* Parallax suave */
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Hover elevação */
+.hover-elevate {
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-elevate:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* ====================================
+   ACESSIBILIDADE
+   ==================================== */
+/* Focus visible para navegação por teclado */
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #0D1117, 0 0 0 4px #FF6A3D;
+}
+
+/* Reduz animações para usuários com preferência */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
