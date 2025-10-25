@@ -367,10 +367,6 @@ export default function Landing() {
                     {exercicio.title}
                   </h3>
                 </div>
-
-                {/* Glow effect no hover */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
-                     style={{ boxShadow: 'inset 0 0 40px rgba(255, 106, 61, 0.3)' }}></div>
               </Link>
             ))}
           </div>
